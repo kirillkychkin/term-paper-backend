@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LanguageController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/languages', [LanguageController::class, 'getAll']);
+Route::get('/languages/{id}', [LanguageController::class, 'getOne']);
