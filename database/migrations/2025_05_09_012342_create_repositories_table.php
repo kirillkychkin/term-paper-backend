@@ -16,12 +16,12 @@ return new class extends Migration
             $table->timestamps();
             $table->text('name');
             $table->text('url');
-            $table->text('readme_text');
-            $table->string('readme_lang', length: 10);
+            $table->text('readme_text')->nullable();
+            $table->string('readme_lang', length: 10)->nullable();
             $table->text('translated_readme_text')->nullable();
             $table->text('readme_russian')->nullable();
-            $table->text('description');
-            $table->string('description_lang', length: 10);
+            $table->text('description')->nullable();
+            $table->string('description_lang', length: 10)->nullable();
             $table->text('translated_description')->nullable();
             $table->text('description_russian')->nullable();
         });
