@@ -59,6 +59,6 @@ class RepositoryController extends Controller
         // If both arrays are empty, return all repositories
         $repositories = $query->orderBy('total_matches', 'desc')->get();
         
-        return response()->json(count($repositories));
+        return response()->json($repositories);
     }    
 }
