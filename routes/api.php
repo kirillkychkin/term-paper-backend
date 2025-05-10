@@ -1,10 +1,14 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\TagCategoryController;
 use App\Http\Controllers\RepositoryController;
 
+Route::get('/user', function (Request $request) {
+    return $request->user();
+})->middleware('auth:sanctum');
 
 Route::get('/languages', [LanguageController::class, 'getAll']);
 Route::get('/languages/{id}', [LanguageController::class, 'getOne']);
