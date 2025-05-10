@@ -32,16 +32,25 @@ class RepositoryController extends Controller
                 $query->selectRaw('(matching_tags_count + matching_languages_count)');
             }
         ]);
-        
-        // If tags are provided, filter repositories that have at least one matching tag
-        if (!empty($tags)) {
+
+        // Apply OR condition if both filters are present
+        if (!empty($tags) && !empty($languages)) {
+            $query->where(function($q) use ($tags, $languages) {
+                $q->whereHas('tags', function($q) use ($tags) {
+                    $q->whereIn('tags.id', $tags);
+                })
+                ->orWhereHas('languages', function($q) use ($languages) {
+                    $q->whereIn('languages.id', $languages);
+                });
+            });
+        }
+        // Apply single conditions if only one filter is present
+        elseif (!empty($tags)) {
             $query->whereHas('tags', function($q) use ($tags) {
                 $q->whereIn('tags.id', $tags);
             });
         }
-        
-        // If languages are provided, filter repositories that have at least one matching language
-        if (!empty($languages)) {
+        elseif (!empty($languages)) {
             $query->whereHas('languages', function($q) use ($languages) {
                 $q->whereIn('languages.id', $languages);
             });
