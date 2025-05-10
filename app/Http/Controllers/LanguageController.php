@@ -9,7 +9,7 @@ class LanguageController extends Controller
 {
     public function getAll()
     {
-        $languages = Language::all();
+        $languages = Language::orderBy('name', 'asc')->get();
  
         return response()
             ->json($languages);

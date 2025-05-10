@@ -9,7 +9,7 @@ class TagCategoryController extends Controller
 {
     public function getAll()
     {
-        $tagCategories = TagCategory::all();
+        $tagCategories = TagCategory::orderBy('name', 'asc')->get();
  
         return response()
             ->json($tagCategories);
