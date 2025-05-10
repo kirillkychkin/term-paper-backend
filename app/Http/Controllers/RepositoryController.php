@@ -14,7 +14,24 @@ class RepositoryController extends Controller
         $tags = $request->input('tags');
         $languages = $request->input('languages');
 
-        $query = Repository::query();
+        $query = Repository::query()        
+        ->withCount([
+            'tags as matching_tags_count' => function($query) use ($tags) {
+                if (!empty($tags)) {
+                    $query->whereIn('tags.id', $tags);
+                }
+            },
+            'languages as matching_languages_count' => function($query) use ($languages) {
+                if (!empty($languages)) {
+                    $query->whereIn('languages.id', $languages);
+                }
+            }
+        ])
+        ->addSelect([
+            'total_matches' => function($query) {
+                $query->selectRaw('(matching_tags_count + matching_languages_count)');
+            }
+        ]);
         
         // If tags are provided, filter repositories that have at least one matching tag
         if (!empty($tags)) {
@@ -31,8 +48,8 @@ class RepositoryController extends Controller
         }
         
         // If both arrays are empty, return all repositories
-        $repositories = $query->get();
+        $repositories = $query->orderBy('total_matches', 'desc')->get();
         
-        return response()->json($repositories);
+        return response()->json(count($repositories));
     }    
 }
