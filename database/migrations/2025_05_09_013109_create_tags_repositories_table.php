@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tags_repositories', function (Blueprint $table) {
+        Schema::create('repository_tag', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->foreignId('repository_id')
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tags_repositories');
+        Schema::dropIfExists('repository_tag');
     }
 };
