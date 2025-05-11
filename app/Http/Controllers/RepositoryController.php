@@ -61,4 +61,12 @@ class RepositoryController extends Controller
         
         return response()->json($repositories);
     }    
+
+    public function getOne(string $repositoryId) {
+        
+        $repository = Repository::where('id', $repositoryId)->with('languages')->with('tags')->first();
+ 
+        return response()
+            ->json($repository);
+    }
 }

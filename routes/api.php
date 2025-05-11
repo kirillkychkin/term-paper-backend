@@ -18,3 +18,4 @@ Route::get('/tag-categories/{id}', [TagCategoryController::class, 'getOne']);
 Route::get('/tag-categories/{id}/tags', [TagCategoryController::class, 'getTags']);
 
 Route::post('/repositories/search', [RepositoryController::class, 'search']);
+Route::get('/repositories/{id}', [RepositoryController::class, 'getOne']);
