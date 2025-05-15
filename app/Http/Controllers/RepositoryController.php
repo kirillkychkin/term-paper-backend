@@ -15,6 +15,7 @@ class RepositoryController extends Controller
         $languages = $request->input('languages');
 
         $query = Repository::query()        
+        ->with(['tags', 'languages']) 
         ->withCount([
             'tags as matching_tags_count' => function($query) use ($tags) {
                 if (!empty($tags)) {
